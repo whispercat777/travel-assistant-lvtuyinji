@@ -1,0 +1,13 @@
+spring.application.name=tm-plan
+server.port=8083
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.datasource.url=jdbc:mysql://localhost:3306/tm_plan
+spring.datasource.username=root
+spring.datasource.password=1234
+#spring.datasource.url=jdbc:mysql://localhost:3308/tm_plan
+#spring.datasource.username=username
+#spring.datasource.password=password
+eureka.client.serviceUrl.defaultZone=http://localhost:8081/eureka/
+
+zhipuai.api.key=084bc5d7a57a453cacced176e4faab2b.qNz6Pkrsx89vmadu
