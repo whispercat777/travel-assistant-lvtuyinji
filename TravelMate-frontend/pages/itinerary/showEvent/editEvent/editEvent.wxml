@@ -1,0 +1,115 @@
+<view class="container">
+  <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
+  
+  <view class="content">
+    <view class="form-container">
+      <!-- 名称 -->
+      <view class="form-item">
+        <view class="form-label">名称</view>
+        <input 
+          class="form-input" 
+          placeholder="请输入事件名称"
+          value="{{event.name}}"
+          data-field="name"
+          bindinput="handleInputChange"
+        />
+      </view>
+
+      <!-- 开始时间 -->
+      <view class="form-item">
+        <view class="form-label">开始时间</view>
+        <view class="picker-container">
+          <picker 
+            mode="date" 
+            value="{{event.startDate}}"
+            data-field="startDate"
+            bindchange="handleDateChange"
+          >
+            <view class="form-input picker-input">{{event.startDate || '选择日期'}}</view>
+          </picker>
+          <picker 
+            mode="time" 
+            value="{{event.startTime}}"
+            data-field="startTime"
+            bindchange="handleTimeChange"
+          >
+            <view class="form-input picker-input">{{event.startTime || '选择时间'}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 结束时间 -->
+      <view class="form-item">
+        <view class="form-label">结束时间</view>
+        <view class="picker-container">
+          <picker 
+            mode="date" 
+            value="{{event.endDate}}"
+            data-field="endDate"
+            start="{{event.startDate}}"
+            bindchange="handleDateChange"
+          >
+            <view class="form-input picker-input">{{event.endDate || '选择日期'}}</view>
+          </picker>
+          <picker 
+            mode="time" 
+            value="{{event.endTime}}"
+            data-field="endTime"
+            bindchange="handleTimeChange"
+          >
+            <view class="form-input picker-input">{{event.endTime || '选择时间'}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 地点 -->
+      <view class="form-item">
+        <view class="form-label">地点</view>
+        <input 
+          class="form-input" 
+          placeholder="请输入地点"
+          value="{{event.location}}"
+          data-field="location"
+          bindinput="handleInputChange"
+        />
+      </view>
+
+      <!-- 类别 -->
+      <view class="form-item">
+        <view class="form-label">类别</view>
+        <view class="type-grid">
+          <block wx:for="{{eventTypes}}" wx:key="*this">
+            <view 
+              class="type-item {{event.type == index ? 'selected' : ''}}"
+              data-type="{{index}}"
+              bindtap="handleTypeSelect"
+            >
+              <image class="type-icon" src="{{item.icon}}" mode="aspectFit"></image>
+              <text class="type-name">{{item.name}}</text>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 描述 -->
+      <view class="form-item">
+        <view class="form-label">描述（选填）</view>
+        <textarea 
+          class="form-textarea" 
+          placeholder="请输入描述"
+          value="{{event.description}}"
+          data-field="description"
+          bindinput="handleInputChange"
+        />
+      </view>
+    </view>
+
+    <!-- 保存按钮 -->
+    <view 
+      class="save-btn {{isSaveDisabled ? 'disabled' : ''}}"
+      bindtap="handleSave"
+    >
+      保存
+    </view>
+  </view>
+</view>

@@ -1,9 +1,47 @@
 <view class="container">
-  <!-- 背景图 -->
   <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
-  
-  <!-- 页面内容 -->
   <view class="content">
-    <!-- 这里放具体页面内容 -->
+    <swiper 
+      class="itinerary-swiper" 
+      bindchange="handleSwiperChange"
+      circular="{{true}}"
+      duration="200"
+      current="{{currentIndex}}">
+      <block wx:for="{{pages}}" wx:key="index">
+        <swiper-item class="swiper-item">
+          <view class="cards-list">
+            <block wx:for="{{item}}" wx:for-item="itinerary" wx:key="id">
+              <view class="itinerary-card" bindtap="handleCardClick" data-id="{{itinerary.id}}">
+                <view class="card-main">
+                  <view class="itinerary-title">{{itinerary.name}}</view>
+                  <view class="info-row">
+                    <view class="location">
+                      <image src="/images/location.png" mode="aspectFit" class="info-icon"></image>
+                      <text>{{itinerary.location}}</text>
+                    </view>
+                    <view class="date">
+                      <image src="/images/calendar.png" mode="aspectFit" class="info-icon"></image>
+                      <text>{{itinerary.startDate}} - {{itinerary.endDate}}</text>
+                    </view>
+                  </view>
+                </view>
+                <!-- 在编辑按钮上添加 catchtap 来阻止事件冒泡 -->
+                <view class="edit-btn" catchtap="handleEdit" data-id="{{itinerary.id}}">
+                  <image src="/images/edit.png" mode="aspectFit" class="edit-icon"></image>
+                </view>
+                <!-- 添加删除按钮 -->
+                <view class="delete-btn" catchtap="handleDelete" data-id="{{itinerary.id}}">
+                  <image src="/images/delete.png" mode="aspectFit" class="delete-icon"></image>
+                </view>
+              </view>
+            </block>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class="add-btn" bindtap="handleAdd">
+    <image src="/images/add.png" mode="aspectFit" class="add-icon"></image>
+    <text>新建行程</text>
   </view>
 </view>

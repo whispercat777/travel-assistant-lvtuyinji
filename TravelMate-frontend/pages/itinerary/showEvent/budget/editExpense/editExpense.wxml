@@ -1,0 +1,80 @@
+<view class="container">
+  <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
+  
+  <view class="content">
+    <view class="form-container">
+      <!-- 名称 -->
+      <view class="form-item">
+        <view class="form-label">名称</view>
+        <input 
+          class="form-input" 
+          placeholder="请输入开销名称"
+          value="{{expense.name}}"
+          data-field="name"
+          bindinput="handleInputChange"
+        />
+      </view>
+
+      <!-- 金额 -->
+      <view class="form-item">
+        <view class="form-label">金额</view>
+        <input 
+          class="form-input" 
+          type="digit"
+          placeholder="请输入金额"
+          value="{{expense.money}}"
+          data-field="money"
+          bindinput="handleInputChange"
+        />
+      </view>
+
+      <!-- 时间 -->
+      <view class="form-item">
+        <view class="form-label">时间</view>
+        <view class="picker-container">
+          <picker 
+            mode="date" 
+            value="{{expense.date}}"
+            data-field="date"
+            bindchange="handleDateChange"
+          >
+            <view class="form-input picker-input">{{expense.date || '选择日期'}}</view>
+          </picker>
+          <picker 
+            mode="time" 
+            value="{{expense.time}}"
+            data-field="time"
+            bindchange="handleTimeChange"
+          >
+            <view class="form-input picker-input">{{expense.time || '选择时间'}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 类别 -->
+      <view class="form-item">
+        <view class="form-label">类别</view>
+        <view class="type-grid">
+          <block wx:for="{{eventTypes}}" wx:key="*this">
+            <view 
+              class="type-item {{expense.type == index ? 'selected' : ''}}"
+              data-type="{{index}}"
+              bindtap="handleTypeSelect"
+            >
+              <image class="type-icon" src="{{item.icon}}" mode="aspectFit"></image>
+              <text class="type-name">{{item.name}}</text>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+
+    <!-- 保存按钮 -->
+    <view 
+      class="save-btn {{isSaveDisabled ? 'disabled' : ''}}"
+      bindtap="handleSave"
+    >
+      保存
+    </view>
+  </view>
+</view>

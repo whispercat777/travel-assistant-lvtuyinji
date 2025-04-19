@@ -1,0 +1,9 @@
+<view class="container">
+  <!-- 背景图 -->
+  <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
+  
+  <!-- 页面内容 -->
+  <view class="content">
+    <!-- 这里放具体页面内容 -->
+  </view>
+</view>

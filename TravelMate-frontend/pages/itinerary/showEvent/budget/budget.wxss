@@ -1,0 +1,156 @@
+.budget-container {
+  padding: 24rpx;
+}
+
+.section {
+  background: white;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16rpx;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 24rpx;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+}
+
+.action-btn.add {
+  background: #6f7348;
+  color: white;
+}
+
+.action-btn.edit {
+  background: #84b68c;
+  color: white;
+}
+
+.action-btn.delete {
+  background: rgba(255, 99, 99, 0.1);
+  color: #999;
+}
+
+.action-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 8rpx;
+}
+
+.budget-amount {
+  text-align: center;
+  padding: 32rpx 0;
+}
+
+.amount {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24rpx;
+}
+
+.budget-amount {
+  text-align: center;
+  padding: 32rpx 0;
+}
+
+.budget-overview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16rpx;
+  font-size: 48rpx;
+  font-weight: 500;
+}
+
+.expenses-total {
+  color: #ff4d4f;  /* 红色 */
+}
+
+.budget-total {
+  color: #52c41a;  /* 改为绿色 */
+}
+
+.divider {
+  color: #999;
+  margin: 0 8rpx;
+}
+
+
+.expenses-list {
+  margin-top: 16rpx;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.expense-info {
+  flex: 1;
+}
+
+.expense-time {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 4rpx;
+}
+
+.expense-amount {
+  font-size: 44rpx;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.expense-details {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.expense-name {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.expense-type {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.type-icon {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 4rpx;
+}
+
+.expense-actions {
+  display: flex;
+  gap: 16rpx;
+  padding-top: 8rpx;
+}

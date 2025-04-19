@@ -1,0 +1,67 @@
+<view class="container">
+  <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
+  
+  <view class="content">
+    <!-- Header section -->
+    <view class="header">
+      <view class="itinerary-info">
+        <view class="title">{{itinerary.name}}</view>
+        <view class="date">{{itinerary.startDate}} - {{itinerary.endDate}}</view>
+        <view class="location">
+          <image src="/images/location.png" mode="aspectFit" class="location-icon"></image>
+          <text>{{itinerary.location}}</text>
+        </view>
+      </view>
+      <view class="intelligence-btn" bindtap="handleIntelligence">智能推荐</view>
+    </view>
+
+    <!-- Events List -->
+    <scroll-view scroll-y class="events-container">
+      <view class="events-list">
+        <block wx:for="{{itinerary.events}}" wx:key="id">
+          <view class="event-card">
+            <view class="event-header">
+              <view class="event-type">
+                <image src="{{eventTypes[item.type].icon}}" mode="aspectFit" class="type-icon"></image>
+                <text>{{eventTypes[item.type].name}}</text>
+              </view>
+              <view class="event-time">
+                {{item.formattedStartTime}} - {{item.formattedEndTime}}
+              </view>
+            </view>
+
+            <view class="event-content">
+              <view class="event-name">{{item.name}}</view>
+              <view class="event-location">
+                <image src="/images/location.png" mode="aspectFit" class="info-icon"></image>
+                <text>{{item.location}}</text>
+              </view>
+              <view class="event-description">{{item.description}}</view>
+            </view>
+
+            <view class="event-actions">
+              <view class="action-btn budget" bindtap="handleShowBudget" data-id="{{item.id}}">
+                <image src="/images/budget.png" mode="aspectFit" class="action-icon"></image>
+                <text>预算开销</text>
+              </view>
+              <view class="action-btn edit" bindtap="handleEditEvent" data-id="{{item.id}}">
+                <image src="/images/edit.png" mode="aspectFit" class="action-icon"></image>
+                <text>编辑</text>
+              </view>
+              <view class="action-btn delete" bindtap="handleDeleteEvent" data-id="{{item.id}}">
+                <image src="/images/delete.png" mode="aspectFit" class="action-icon"></image>
+                <text>删除</text>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+
+    <!-- Add Event Button -->
+    <view class="add-btn" bindtap="handleAddEvent">
+      <image src="/images/add.png" mode="aspectFit" class="add-icon"></image>
+      <text>添加事件</text>
+    </view>
+  </view>
+</view>

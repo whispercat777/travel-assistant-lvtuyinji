@@ -5,6 +5,12 @@
     "pages/expense/expense",
     "pages/weather/weather",
     "pages/me/me",
+    "pages/itinerary/editItinerary/editItinerary",
+    "pages/itinerary/showEvent/event",
+    "pages/itinerary/intelligence/intelligence",
+    "pages/itinerary/showEvent/editEvent/editEvent",
+    "pages/itinerary/showEvent/budget/budget",
+    "pages/itinerary/showEvent/budget/editExpense/editExpense",
   ],
   "window": {
     "navigationBarTextStyle": "black",

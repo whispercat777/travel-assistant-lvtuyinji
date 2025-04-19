@@ -1,0 +1,71 @@
+<view class="container">
+  <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
+  
+  <view class="content">
+    <view class="budget-container">
+      <!-- Budget Section -->
+      <view class="section budget-section">
+        <!-- 删除多余的 action buttons 相关代码，只保留编辑按钮 -->
+        <view class="section-header">
+          <text class="section-title">预算使用情况</text>
+          <view wx:if="{{!budget}}" class="action-btn add" bindtap="handleAddBudget">
+            <image src="/images/add.png" mode="aspectFit" class="action-icon"></image>
+            <text>添加预算</text>
+          </view>
+          <view wx:else class="action-btn edit" bindtap="handleEditBudget">
+            <image src="/images/edit.png" mode="aspectFit" class="action-icon"></image>
+            <text>编辑预算</text>
+          </view>
+        </view>
+                
+        <view class="budget-amount" wx:if="{{budget}}">
+          <view class="budget-overview">
+            <text class="value expenses-total">{{totalExpenses}}</text>
+            <text class="divider">/</text>
+            <text class="value budget-total">{{budget.money}}</text>
+          </view>
+          <view class="text-red text-sm" wx:if="{{remainingBudget < 0}}">
+            已超出预算 ¥{{-remainingBudget}}
+          </view>
+        </view>
+      </view>
+
+      <!-- Expenses Section -->
+      <view class="section expenses-section">
+        <view class="section-header">
+          <text class="section-title">开销列表</text>
+          <view class="action-btn add" bindtap="handleAddExpense">
+            <image src="/images/add.png" mode="aspectFit" class="action-icon"></image>
+            <text>添加开销</text>
+          </view>
+        </view>
+
+        <view class="expenses-list">
+          <block wx:for="{{expenses}}" wx:key="id">
+            <view class="expense-item">
+              <view class="expense-info">
+                <view class="expense-time">{{item.time}}</view>
+                <view class="expense-amount">¥{{item.money}}</view>
+                <view class="expense-details">
+                  <text class="expense-name">{{item.name}}</text>
+                  <view class="expense-type">
+                    <image src="{{eventTypes[item.type].icon}}" mode="aspectFit" class="type-icon"></image>
+                    <text>{{eventTypes[item.type].name}}</text>
+                  </view>
+                </view>
+              </view>
+              <view class="expense-actions">
+                <view class="action-btn edit" bindtap="handleEditExpense" data-id="{{item.id}}">
+                  <image src="/images/edit.png" mode="aspectFit" class="action-icon"></image>
+                </view>
+                <view class="action-btn delete" bindtap="handleDeleteExpense" data-id="{{item.id}}">
+                  <image src="/images/delete.png" mode="aspectFit" class="action-icon"></image>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

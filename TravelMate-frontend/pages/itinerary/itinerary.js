@@ -1,65 +1,118 @@
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    itineraries: [],
+    pages: [],
+    currentIndex: 0
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
+  onLoad() {
+    this.fetchItineraries()
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow() {
-
+    this.fetchItineraries()
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
+  fetchItineraries() {
+    const userId = wx.getStorageSync('userId')
+    wx.request({
+      url: `http://113.44.75.241:8080/itinerary/getall?userID=${userId}`,
+      method: 'GET',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: (res) => {
+        if (res.data.code === 1) {
+          const itineraries = res.data.data
+          // 将行程按每页4个分组
+          const pages = []
+          for (let i = 0; i < itineraries.length; i += 4) {
+            pages.push(itineraries.slice(i, i + 4))
+          }
+          
+          this.setData({
+            itineraries: itineraries,
+            pages: pages
+          })
+        } else {
+          wx.showToast({
+            title: '获取行程失败',
+            icon: 'none'
+          })
+        }
+      },
+      fail: (error) => {
+        wx.showToast({
+          title: '网络错误',
+          icon: 'none'
+        })
+      }
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
+  handleSwiperChange(e) {
+    const current = e.detail.current
+    this.setData({
+      currentIndex: current
+    })
+  },  
 
+  handleCardClick(e) {
+    const { id } = e.currentTarget.dataset
+    wx.navigateTo({
+      url: `/pages/itinerary/showEvent/event?id=${id}`
+    })
+    console.log('showEvent',id);
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
+  handleEdit(e) {
+    const { id } = e.currentTarget.dataset
+    wx.navigateTo({
+      url: `/pages/itinerary/editItinerary/editItinerary?id=${id}`
+    })
+    console.log('edit',id);
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
+  handleAdd() {
+    wx.navigateTo({
+      url: '/pages/itinerary/editItinerary/editItinerary'
+    })
+    console.log('add');
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
+  handleDelete(e) {
+    const { id } = e.currentTarget.dataset
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除此行程吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.request({
+            url: `http://113.44.75.241:8080/itinerary/delete?id=${id}`,
+            method: 'DELETE',
+            success: (res) => {
+              if (res.data.code === 1) {
+                wx.showToast({
+                  title: '删除成功',
+                  icon: 'success'
+                })
+                this.fetchItineraries()
+              } else {
+                wx.showToast({
+                  title: '删除失败',
+                  icon: 'none'
+                })
+              }
+            },
+            fail: () => {
+              wx.showToast({
+                title: '网络错误',
+                icon: 'none' 
+              })
+            }
+          })
+        }
+      }
+    })
+   }
 })
