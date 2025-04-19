@@ -1,11 +1,11 @@
 Page({
   onLoad() {
-    // 检查是否已经登录
+    // 检查当前是否已经登录
     const userId = wx.getStorageSync('userId');
     const userInfo = wx.getStorageSync('userInfo');
     
     if (userId && userInfo) {
-      // 已登录，直接跳转到首页
+      // 说明已登录，直接跳转到首页
       wx.switchTab({
         url: '/pages/itinerary/itinerary'
       });
@@ -25,7 +25,7 @@ Page({
     ]
   },
 
-  // 第一步：获取id
+  // 第一步：获取用户id
   handleInitialLogin() {
     // 1. 先获取用户信息（必须直接在点击事件中触发）
     wx.getUserProfile({
