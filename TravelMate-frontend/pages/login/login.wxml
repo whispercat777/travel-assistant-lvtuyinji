@@ -1,0 +1,52 @@
+<view class="container">
+  <!-- 背景图 -->
+  <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
+  
+  <!-- logo和标题区域 -->
+  <view class="header {{step === 'userInfo' ? 'header-top' : ''}}">
+    <image class="logo" src="/images/title.png" mode="aspectFill"></image>
+    <view class="title-cn">旅途印济</view>
+    <view class="title-en">TravelMate</view>
+  </view>
+
+  <!-- 初始登录按钮 -->
+  <button 
+    class="login-btn" 
+    bindtap="handleInitialLogin"
+    wx:if="{{step === 'initial'}}"
+  >
+    微信登录
+  </button>
+
+  <!-- 用户信息表单 -->
+  <block wx:if="{{step === 'userInfo'}}">
+    <view class="form-container">
+      <view class="form-item">
+        <text class="label">昵称</text>
+        <input 
+          class="input" 
+          type="text" 
+          placeholder="请输入昵称" 
+          value="{{userInfo.nickname}}"
+          bindinput="onNicknameInput"
+        />
+      </view>
+      
+      <view class="form-item">
+        <text class="label">性别</text>
+        <radio-group class="radio-group" bindchange="onGenderChange">
+          <label wx:for="{{genderOptions}}" wx:key="value" class="radio-label">
+            <radio value="{{item.value}}" checked="{{userInfo.gender === item.value}}" />
+            {{item.label}}
+          </label>
+        </radio-group>
+      </view>
+
+      <button 
+        class="confirm-btn" 
+        bindtap="handleConfirmLogin"
+        disabled="{{!userInfo.nickname}}"
+      >确认登录</button>
+    </view>
+  </block>
+</view>

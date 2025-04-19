@@ -1,0 +1,88 @@
+/* pages/login/login.wxss */
+.login-container {
+  padding: 40rpx;
+}
+
+/* 原有的header样式保持不变 */
+.header {
+  margin-top: 160rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 添加过渡效果使移动更流畅 */
+  transition: margin-top 0.3s ease;
+}
+
+/* 添加上移时的样式 */
+.header-top {
+  margin-top: 60rpx;  /* 可以调整这个值来控制上移的距离 */
+}
+
+.logo {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;  /* 使图片变成圆形 */
+  margin-bottom: 10rpx;
+}
+
+.title-cn {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.title-en {
+  font-size: 36rpx;
+  color: #666;
+  margin-bottom: 80rpx;
+}
+
+.login-btn{
+  margin-top: 200rpx;
+  width: 100%;
+  height: 100rpx;
+  line-height: 70rpx;
+  background: #07c160;
+  color: #fff;
+  border-radius: 8rpx;
+}
+
+.confirm-btn {
+  margin-top: 100rpx;
+  width: 100%;
+  height: 100rpx;
+  line-height: 70rpx;
+  background: #07c160;
+  color: #fff;
+  border-radius: 8rpx;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.label {
+  display: block;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.input {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid #e5e5e5;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+}
+
+.radio-label {
+  margin-right: 40rpx;
+  font-size: 28rpx;
+}
+
+.confirm-btn[disabled] {
+  background: #9c9c9c;
+}

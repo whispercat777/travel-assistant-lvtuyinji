@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/itinerary/itinerary",
+    "pages/expense/expense",
+    "pages/weather/weather",
+    "pages/me/me",
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "旅途印济",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/itinerary/itinerary",
+        "text": "行程",
+        "iconPath": "images/not_itinerary.png",
+        "selectedIconPath": "images/itinerary.png"
+      },
+      {
+        "pagePath": "pages/expense/expense",
+        "text": "开销",
+        "iconPath": "images/not_expense.png",
+        "selectedIconPath": "images/expense.png"
+      },
+      {
+        "pagePath": "pages/weather/weather",
+        "text": "天气",
+        "iconPath": "images/not_weather.png",
+        "selectedIconPath": "images/weather.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "images/not_me.png",
+        "selectedIconPath": "images/me.png"
+      }
+    ],
+    "color": "#999999",
+    "selectedColor": "#6f7348",
+    "backgroundColor": "#eeebe4",
+    "borderStyle": "white"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
