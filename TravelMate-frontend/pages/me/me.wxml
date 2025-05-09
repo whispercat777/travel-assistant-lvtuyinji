@@ -2,8 +2,23 @@
   <!-- 背景图 -->
   <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
   
-  <!-- 页面内容 -->
-  <view class="content">
-    <!-- 这里放具体页面内容 -->
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <!-- 头像区域 -->
+    <image 
+      class="avatar" 
+      src="/images/{{userInfo.gender === 0 ? 'unknown' : userInfo.gender === 1 ? 'male' : 'female'}}.png"
+      mode="aspectFill"
+    ></image>
+    
+    <!-- 用户信息区域 -->
+    <view class="user-info">
+      <text class="nickname">{{userInfo.nickname}}</text>
+      <text class="user-id">ID：{{userInfo.id}}</text>
+      <text class="gender">性别：{{userInfo.gender === 0 ? '未知' : userInfo.gender === 1 ? '男' : '女'}}</text>
+    </view>
+
+    <!-- 编辑按钮 -->
+    <button class="edit-btn" bindtap="handleEdit">编辑资料</button>
   </view>
 </view>

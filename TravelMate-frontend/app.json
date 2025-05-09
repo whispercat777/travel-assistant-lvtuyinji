@@ -2,21 +2,34 @@
   "pages": [
     "pages/login/login",
     "pages/itinerary/itinerary",
-    "pages/expense/expense",
-    "pages/weather/weather",
     "pages/me/me",
+    "pages/weather/weather",
+    "pages/expense/expense",
+    "pages/me/edit/edit",
     "pages/itinerary/editItinerary/editItinerary",
     "pages/itinerary/showEvent/event",
-    "pages/itinerary/intelligence/intelligence",
     "pages/itinerary/showEvent/editEvent/editEvent",
+    "pages/itinerary/intelligence/intelligence",
     "pages/itinerary/showEvent/budget/budget",
     "pages/itinerary/showEvent/budget/editExpense/editExpense",
+    "pages/weather/editReminder/editReminder"
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "旅途印济",
     "navigationBarBackgroundColor": "#ffffff"
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于获取当地天气信息"
+    },
+    "scope.subscribeMessage": {
+      "desc": "用于发送天气提醒"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
   "tabBar": {
     "list": [
       {

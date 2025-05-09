@@ -1,0 +1,194 @@
+.container {
+  padding: 20rpx;
+  min-height: 100vh;
+}
+
+.search-container {
+  display: flex;
+  padding: 20rpx;
+  gap: 20rpx;
+  background: white;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.search-input, .date-picker {
+  width: 200rpx;
+  height: 70rpx;
+  padding: 0 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  line-height: 70rpx;
+  font-size: 28rpx;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #333;
+}
+
+.search-btn {
+  width: 160rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  background: #6f7348;
+  color: white;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+}
+
+.weather-container {
+  background: white;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.location-date {
+  margin-bottom: 30rpx;
+}
+
+.location {
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-right: 20rpx;
+}
+
+.date {
+  color: #666;
+  font-size: 28rpx;
+}
+
+.temperature {
+  font-size: 80rpx;
+  margin: 40rpx 0;
+}
+
+.temp-max {
+  color: #ff6b6b;
+}
+
+.temp-separator {
+  margin: 0 20rpx;
+  color: #999;
+}
+
+.temp-min {
+  color: #4dabf7;
+}
+
+.weather-details {
+  display: flex;
+  justify-content: center;
+  gap: 60rpx;
+  color: #666;
+  font-size: 32rpx;
+}
+
+.weather-description, .wind-info {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.weather-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.no-data {
+  text-align: center;
+  color: #999;
+  margin-top: 200rpx;
+  font-size: 32rpx;
+}
+
+.loading {
+  text-align: center;
+  color: #666;
+  margin-top: 200rpx;
+}
+
+/* 在原有weather.wxss末尾添加 */
+.reminders-container {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-top: 30rpx;
+}
+
+.reminders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.add-btn {
+  background: #6f7348;
+  color: white;
+  font-size: 28rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 8rpx;
+  line-height: 1.5;
+  display: inline-block;
+  margin-left: auto;
+  box-sizing: border-box;
+  width: auto;
+}
+
+.reminder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.reminder-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f8f8;
+  border-radius: 8rpx;
+}
+
+.reminder-content {
+  flex: 1;
+}
+
+.reminder-location {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.reminder-time, .reminder-date {
+  font-size: 28rpx;
+  color: #666;
+  margin-top: 4rpx;
+}
+
+.reminder-label {
+  color: #999;
+}
+
+.reminder-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-icon {
+  width: 40rpx;
+  height: 40rpx;
+  padding: 10rpx;
+}
+
+.no-reminders {
+  text-align: center;
+  color: #999;
+  padding: 40rpx 0;
+  font-size: 28rpx;
+}

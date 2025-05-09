@@ -1,0 +1,65 @@
+<view class="container">
+  <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
+  
+  <view class="content">
+    <view class="form-container">
+      <!-- 提醒时间 -->
+      <view class="form-item">
+        <view class="form-label">提醒时间</view>
+        <view class="picker-container">
+          <picker 
+            mode="date" 
+            value="{{reminder.reminderDate}}"
+            start="{{today}}"
+            data-field="reminderDate"
+            bindchange="handleDateChange"
+          >
+            <view class="form-input picker-input">{{reminder.reminderDate || '选择日期'}}</view>
+          </picker>
+          <picker 
+            mode="time" 
+            value="{{reminder.reminderTime}}"
+            data-field="reminderTime"
+            bindchange="handleTimeChange"
+          >
+            <view class="form-input picker-input">{{reminder.reminderTime || '选择时间'}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 查询日期 -->
+      <view class="form-item">
+        <view class="form-label">查询日期</view>
+        <picker 
+          mode="date" 
+          value="{{reminder.queryDate}}"
+          start="{{reminder.reminderDate || today}}"
+          end="{{endDate}}"
+          bindchange="handleQueryDateChange"
+        >
+          <view class="form-input picker-input">{{reminder.queryDate || '选择日期'}}</view>
+        </picker>
+      </view>
+
+      <!-- 地点 -->
+      <view class="form-item">
+        <view class="form-label">地点</view>
+        <input 
+          class="form-input" 
+          placeholder="请输入地点"
+          value="{{reminder.location}}"
+          data-field="location"
+          bindinput="handleInputChange"
+        />
+      </view>
+    </view>
+
+    <!-- 保存按钮 -->
+    <view 
+      class="save-btn {{isSaveDisabled ? 'disabled' : ''}}"
+      bindtap="handleSave"
+    >
+      保存
+    </view>
+  </view>
+</view>

@@ -1,0 +1,34 @@
+<view class="container">
+  <!-- 背景图 -->
+  <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
+  
+  <!-- 编辑表单 -->
+  <view class="form-container">
+    <view class="form-item">
+      <text class="label">昵称</text>
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="请输入昵称" 
+        value="{{userInfo.nickname}}"
+        bindinput="onNicknameInput"
+      />
+    </view>
+    
+    <view class="form-item">
+      <text class="label">性别</text>
+      <radio-group class="radio-group" bindchange="onGenderChange">
+        <label wx:for="{{genderOptions}}" wx:key="value" class="radio-label">
+          <radio value="{{item.value}}" checked="{{userInfo.gender === item.value}}" />
+          {{item.label}}
+        </label>
+      </radio-group>
+    </view>
+
+    <button 
+      class="save-btn" 
+      bindtap="handleSave"
+      disabled="{{!userInfo.nickname}}"
+    >保存</button>
+  </view>
+</view>

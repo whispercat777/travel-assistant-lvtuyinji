@@ -4,6 +4,82 @@
   
   <!-- 页面内容 -->
   <view class="content">
-    <!-- 这里放具体页面内容 -->
+    <view class="search-container">
+      <input class="search-input" placeholder="请输入城市名" bindinput="onLocationInput" value="{{inputLocation}}" />
+      <picker mode="date" value="{{inputDate}}" start="{{today}}" end="{{endDate}}" bindchange="onDateChange">
+        <view class="date-picker">{{hasSelectedDate ? inputDate : '请选择日期'}}</view>
+      </picker>
+      <button class="search-btn" size="mini" bindtap="searchWeather">搜索</button>
+    </view>
+
+    <!-- Weather Display -->
+    <block wx:if="{{weatherData}}">
+      <view class="weather-container">
+        <view class="location-date">
+          <text class="location">{{weatherData.location}}</text>
+          <text class="date">{{weatherData.date}}</text>
+        </view>
+        
+        <view class="weather-info">
+          <view class="temperature">
+            <text class="temp-max">{{weatherData.maxTemperature}}°</text>
+            <text class="temp-separator">/</text>
+            <text class="temp-min">{{weatherData.minTemperature}}°</text>
+          </view>
+          
+          <view class="weather-details">
+            <view class="weather-description">
+                <image class="weather-icon" src="{{weatherData.weatherIcon}}"></image>
+                <text>{{weatherData.description}}</text>
+            </view>
+            <view class="wind-info">
+              <image class="weather-icon" src="/images/wind.png"></image>
+              <text>{{weatherData.wind}}级</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <view wx:if="{{!weatherData && !loading}}" class="no-data">
+      暂无数据
+    </view>
+
+    <view wx:if="{{loading}}" class="loading">
+      <text>加载中...</text>
+    </view>
+    <!-- Weather Reminders Section -->
+    <view class="reminders-container">
+      <view class="reminders-header">
+        <text class="section-title">天气提醒</text>
+        <view class="add-btn" bindtap="handleAddReminder">添加提醒</view>
+      </view>
+      
+      <block wx:if="{{reminders && reminders.length > 0}}">
+        <view class="reminder-list">
+          <view class="reminder-item" wx:for="{{reminders}}" wx:key="id">
+            <view class="reminder-content">
+              <view class="reminder-location">{{item.location}}</view>
+              <view class="reminder-time">
+                <text class="reminder-label">提醒时间：</text>
+                <text>{{item.reminderDate}} {{item.time}}</text>
+              </view>
+              <view class="reminder-date">
+                <text class="reminder-label">查询日期：</text>
+                <text>{{item.date}}</text>
+              </view>
+            </view>
+            <view class="reminder-actions">
+              <image src="/images/edit.png" class="action-icon" bindtap="handleEditReminder" data-id="{{item.id}}"/>
+              <image src="/images/delete.png" class="action-icon" bindtap="handleDeleteReminder" data-id="{{item.id}}"/>
+            </view>
+          </view>
+        </view>
+      </block>
+      
+      <view wx:elif="{{!loading}}" class="no-reminders">
+        暂无天气提醒
+      </view>
+    </view>
   </view>
 </view>
