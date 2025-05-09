@@ -1,65 +1,44 @@
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    nodes: [],
+    loading: true
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
-
+    const { itiID } = options;
+    this.fetchIntelligence(itiID);
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  fetchIntelligence(itiID) {
+    wx.request({
+      url: `http://113.44.75.241:8080/itinerary/getintrec?id=${itiID}`,
+      success: (res) => {
+        if (res.data.code === 1) {
+          this.setData({
+            nodes: [{
+              name: 'div',
+              children: res.data.data.split('\n').map(line => {
+                let className = '';
+                
+                if (line.match(/^\d+\./)) className = 'day-title';
+                else if (line.match(/^-\s+(上午|下午|晚上):/)) className = 'period-title';
+                else if (line.match(/^-\s+\d{2}:\d{2}/)) className = 'time-entry';
+                else if (line.startsWith('-')) className = 'period-title';
+                
+                return {
+                  name: 'div',
+                  attrs: {
+                    class: className
+                  },
+                  children: [{
+                    type: 'text',
+                    text: line.trim()
+                  }]
+                };
+              })
+            }],
+            loading: false
+          });
+        }
+      }
+    });
   }
-})
+ });

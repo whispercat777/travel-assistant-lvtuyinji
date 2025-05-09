@@ -1,1 +1,31 @@
-/* pages/expense/expense.wxss */
+.container {
+  padding: 20px;
+  font-family: "PingFang SC", sans-serif;
+ }
+ 
+ .content {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+ }
+ 
+ .loading {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+ }
+ 
+ .day-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px 0 10px;
+ }
+ 
+ .period-title {
+  margin: 15px 0 10px 20px;
+ }
+ 
+ .time-entry {
+  margin: 8px 0 8px 40px;
+ }

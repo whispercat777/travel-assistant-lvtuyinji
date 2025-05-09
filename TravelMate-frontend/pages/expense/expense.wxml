@@ -1,9 +1,77 @@
 <view class="container">
-  <!-- 背景图 -->
   <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
   
-  <!-- 页面内容 -->
-  <view class="content">
-    <!-- 这里放具体页面内容 -->
+  <view class="mode-switch">
+    <view class="{{viewMode === 'all' ? 'active' : ''}}" bindtap="switchViewMode" data-mode="all">按时间</view>
+    <view class="{{viewMode === 'category' ? 'active' : ''}}" bindtap="switchViewMode" data-mode="category">按类别</view>
+    <view class="{{viewMode === 'trip' ? 'active' : ''}}" bindtap="switchViewMode" data-mode="trip">按行程</view>
+  </view>
+
+  
+  <view class="summary">
+    <view class="total-expense">
+      <text>总支出</text>
+      <text class="amount-expense">¥{{totalExpense}}</text>
+    </view>
+    <view class="total-budget" wx:if="{{viewMode === 'trip'}}">
+      <text>总预算</text>
+      <text class="amount-budget">¥{{totalBudget}}</text>
+    </view>
+  </view>
+
+  <view class="date-picker" wx:if="{{viewMode === 'all'}}">
+    <view class="date-item">
+      <text>开始时间：</text>
+      <picker mode="date" value="{{startTime}}" bindchange="onStartTimeChange">
+        <view class="picker">{{startTime}}</view>
+      </picker>
+    </view>
+    <view class="date-item">
+      <text>结束时间：</text>
+      <picker mode="date" value="{{endTime}}" bindchange="onEndTimeChange">
+        <view class="picker">{{endTime}}</view>
+      </picker>
+    </view>
+  </view>
+
+
+  <view class="type-grid" wx:if="{{viewMode === 'category'}}">
+    <block wx:for="{{typeOptions}}" wx:key="id">
+      <view 
+        class="type-item {{typeId == item.id ? 'selected' : ''}}"
+        data-type="{{item.id}}"
+        bindtap="toggleType"
+      >
+        <image class="type-icon" src="{{item.icon}}" mode="aspectFit"></image>
+        <text class="type-name">{{item.name}}</text>
+      </view>
+    </block>
+  </view>
+  <!-- New trip list section -->
+  <view class="trip-grid" wx:if="{{viewMode === 'trip'}}">
+    <view 
+      wx:for="{{trips}}" 
+      wx:key="id"
+      class="trip-item {{tripId == item.id ? 'selected' : ''}}"
+      bindtap="toggleTrip"
+      data-id="{{item.id}}"
+    >
+      <view class="trip-info">
+        <text class="trip-name">{{item.name}}</text>
+        <text class="trip-date">{{item.startDate}}</text>
+        <text class="trip-date">- {{item.endDate}}</text>
+        <text class="trip-location">{{item.location}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="expense-list">
+    <view class="expense-item" wx:for="{{expenses}}" wx:key="id">
+      <view class="expense-info">
+        <text class="expense-name">{{item.name}}</text>
+        <text class="expense-time">{{item.time}}</text>
+      </view>
+      <text class="expense-amount">¥{{item.money}}</text>
+    </view>
   </view>
 </view>

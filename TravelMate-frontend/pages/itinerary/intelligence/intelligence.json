@@ -1,3 +1,5 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "智能推荐",
+  "usingComponents": {
+  }
 }
