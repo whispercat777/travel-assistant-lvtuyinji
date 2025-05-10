@@ -1,12 +1,11 @@
 package org.example.tmuser.service.impl;
 import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tmuser.mapper.UserMapper;
-import org.example.tmuser.pojo.User;
+import org.example.tmuser.domain.po.User;
 import org.example.tmuser.service.UserService;
 import org.example.tmuser.util.WeChatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,6 @@ import org.springframework.web.client.RestTemplate;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private RestTemplate restTemplate;
-
     @Override
     public Integer login(String code) {
         String openID = null;
@@ -75,6 +71,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public User getUserByID(Integer id) {
         return userMapper.selectById(id); // 使用 MyBatis-Plus 提供的 selectById 方法
     }
-
-
 }

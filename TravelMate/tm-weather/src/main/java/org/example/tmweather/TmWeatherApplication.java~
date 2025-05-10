@@ -1,0 +1,13 @@
+package org.example.tmweather;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class TmWeatherApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TmWeatherApplication.class, args);
+    }
+
+}

@@ -1,32 +1,13 @@
 package org.example.tmplan.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.zhipu.oapi.ClientV4;
-import com.zhipu.oapi.Constants;
-import com.zhipu.oapi.service.v4.model.ChatCompletionRequest;
-import com.zhipu.oapi.service.v4.model.ChatMessage;
-import com.zhipu.oapi.service.v4.model.ChatMessageRole;
-import com.zhipu.oapi.service.v4.model.ModelApiResponse;
-import okhttp3.*;
-import org.example.tmplan.pojo.dto.ItineraryDTO;
+import org.example.tmplan.domain.dto.ItineraryDTO;
 import org.example.tmplan.service.IntRecService;
 import org.example.tmplan.service.ItineraryService;
 import org.example.tmplan.service.ZhipuAIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class IntRecServiceImpl implements IntRecService {

@@ -1,0 +1,35 @@
+package org.example.tmplan.controller;
+
+import org.example.tmplan.domain.po.Result;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.ResponseEntity;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class IntRecControllerTest {
+
+    @Autowired
+    private TestRestTemplate restTemplate;
+
+    @Test
+    void testGetIntRec() {
+        ResponseEntity<Result> response = restTemplate.getForEntity("/itinerary/getintrec?id=1", Result.class);
+
+        // 断言HTTP状态码是200
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+
+        // 断言返回体不为空
+        Result result = response.getBody();
+        assertThat(result).isNotNull();
+
+        // 断言Result返回成功
+        assertThat(result.getCode()).isEqualTo(1);
+
+        // 断言返回的数据不为空
+        assertThat(result.getData()).isNotNull();
+    }
+}

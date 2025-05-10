@@ -4,9 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.example.tmplan.client.FinanceClient;
 import org.example.tmplan.mapper.EventMapper;
-import org.example.tmplan.pojo.Event;
-import org.example.tmplan.pojo.vo.EventVo;
+import org.example.tmplan.domain.po.Event;
+import org.example.tmplan.domain.po.Result;
+import org.example.tmplan.domain.vo.Budget;
+import org.example.tmplan.domain.vo.EventVo;
+import org.example.tmplan.domain.vo.Expense;
 import org.example.tmplan.service.EventService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,8 @@ import java.util.List;
 public class EventServiceImpl extends ServiceImpl<EventMapper, Event> implements EventService {
     @Autowired
     private EventMapper eventMapper;
+    @Autowired
+    private FinanceClient financeClient;
     public Integer addEvent(Event event) {
         // 插入数据
         boolean isSaved = this.save(event);
@@ -44,7 +50,22 @@ public class EventServiceImpl extends ServiceImpl<EventMapper, Event> implements
             // 复制属性
             BeanUtils.copyProperties(event, vo);
 
+            // 获取预算信息
+            Result budgetResult = financeClient.getEventBudget(event.getID());
+            List<Budget> budgets = budgetResult.getData() != null
+                    ? (List<Budget>) budgetResult.getData()
+                    : new ArrayList<>();
+            vo.setBudgets(budgets);
 
+            // 获取支出信息
+            Result expenseResult = financeClient.getEventExpense(event.getID());
+            List<Expense> expenses = expenseResult.getData() != null
+                    ? (List<Expense>) expenseResult.getData()
+                    : new ArrayList<>();
+            vo.setExpenses(expenses);
+
+            // 添加到列表
+            eventVos.add(vo);
         }
 
         return eventVos;
@@ -74,6 +95,9 @@ public class EventServiceImpl extends ServiceImpl<EventMapper, Event> implements
     }
 
     public boolean deleteEvent(Integer id){
+        // 删除该事件的预算和支出
+        financeClient.deleteBudgetByEveID(id);
+        financeClient.deleteExpenseByEveID(id);
         // 删除事件
         boolean isDeleted = this.removeById(id);
         if(isDeleted){

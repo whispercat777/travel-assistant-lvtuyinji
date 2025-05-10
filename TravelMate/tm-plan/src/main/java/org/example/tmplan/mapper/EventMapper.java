@@ -3,8 +3,7 @@ package org.example.tmplan.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.example.tmplan.pojo.Event;
-import org.example.tmplan.pojo.Itinerary;
+import org.example.tmplan.domain.po.Event;
 
 import java.util.List;
 

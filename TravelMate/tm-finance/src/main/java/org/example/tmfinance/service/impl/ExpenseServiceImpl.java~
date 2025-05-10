@@ -1,0 +1,156 @@
+package org.example.tmfinance.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.example.tmfinance.client.PlanClient;
+import org.example.tmfinance.mapper.ExpenseMapper;
+import org.example.tmfinance.domain.po.Expense;
+import org.example.tmfinance.domain.po.Result;
+import org.example.tmfinance.domain.po.TimeReport;
+import org.example.tmfinance.service.ExpenseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+
+@Service
+public class ExpenseServiceImpl extends ServiceImpl<ExpenseMapper, Expense> implements ExpenseService {
+    @Autowired
+    private ExpenseMapper expenseMapper;
+    @Autowired
+    private PlanClient planClient;
+
+    public Integer addExpense(Expense expense) {
+        boolean isInsert =this.save(expense);
+        if (!isInsert) {
+            return null;
+        }
+        return expense.getId();
+    }
+    // 根据 eveID 查询记录的总数
+    public Integer countRecordsByEveID(Integer eveID) {
+        return expenseMapper.countByEveID(eveID);
+    }
+    @Override
+    public Integer modifyExpense(Expense expense) {
+        // 创建 LambdaUpdateWrapper 来构建动态的更新条件
+        LambdaUpdateWrapper<Expense> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Expense::getId, expense.getId()) // 根据 ID 进行匹配
+                .set(expense.getEveID() != null, Expense::getEveID, expense.getEveID()) // 如果 eveID 不为空，更新 eveID
+                .set(expense.getType() != null, Expense::getType, expense.getType()) // 如果 type 不为空，更新 type
+                .set(expense.getTime() != null, Expense::getTime, expense.getTime()) // 如果 time 不为空，更新 time
+                .set(expense.getMoney() != null, Expense::getMoney, expense.getMoney()) // 如果 money 不为空，更新 money
+                .set(expense.getName() != null, Expense::getName, expense.getName()); // 如果 name 不为空，更新 name
+
+        // 执行更新操作
+        int rows = expenseMapper.update(null, updateWrapper);
+        if (rows > 0) {
+            return expense.getId(); // 返回更新的记录 ID
+        }
+        return null; // 如果没有更新任何记录，返回 null
+    }
+
+    public List<Expense> getEventExpense(Integer eveID) {
+        // 创建 LambdaQueryWrapper 来构建查询条件
+        LambdaQueryWrapper<Expense> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Expense::getEveID, eveID); // 根据 eveID 查询
+
+        // 查询记录并返回结果
+        return this.list(queryWrapper);
+    }
+    public TimeReport getTimeExpense(String startTime, String endTime, Integer userID) {
+        // 调用 PlanClient 获取 userID 对应的 eveID 列表
+        Result result = planClient.getAllEvent(userID);
+
+
+        // 提取返回的 eveID 列表
+        List<Integer> eveIDs = (List<Integer>) result.getData();
+        if (eveIDs == null || eveIDs.isEmpty()) {
+            return new TimeReport(Collections.emptyList(), 0); // 无相关事件
+        }
+
+        // 创建查询条件
+        LambdaQueryWrapper<Expense> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.between(Expense::getTime, LocalDateTime.parse(startTime), LocalDateTime.parse(endTime))
+                .in(Expense::getEveID, eveIDs);
+
+        // 查询符合条件的记录
+        List<Expense> expenses = expenseMapper.selectList(queryWrapper);
+
+        // 计算总开销金额
+        int totalExpense = expenses.stream()
+                .mapToInt(expense -> Math.round(expense.getMoney()))
+                .sum();
+
+        // 构建并返回 TimeReport 对象
+        return new TimeReport(expenses, totalExpense);
+    }
+
+    public Boolean deleteExpenseByEveID(Integer eveID) {
+        // 创建 LambdaQueryWrapper 构建删除条件
+        LambdaQueryWrapper<Expense> deleteWrapper = new LambdaQueryWrapper<>();
+        deleteWrapper.eq(Expense::getEveID, eveID); // 根据 eveID 构建删除条件
+
+        // 执行删除操作
+        expenseMapper.delete(deleteWrapper);
+
+        return true;
+    }
+    public TimeReport getAllExpense(Integer userID){
+        // 调用 PlanClient 获取 userID 对应的 eveID 列表
+        Result result = planClient.getAllEvent(userID);
+
+
+        // 提取返回的 eveID 列表
+        List<Integer> eveIDs = (List<Integer>) result.getData();
+        if (eveIDs == null || eveIDs.isEmpty()) {
+            return new TimeReport(Collections.emptyList(), 0); // 无相关事件
+        }
+
+        // 创建查询条件
+        LambdaQueryWrapper<Expense> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Expense::getEveID, eveIDs);
+
+        // 查询符合条件的记录
+        List<Expense> expenses = expenseMapper.selectList(queryWrapper);
+
+        // 计算总开销金额
+        int totalExpense = expenses.stream()
+                .mapToInt(expense -> Math.round(expense.getMoney()))
+                .sum();
+
+        // 构建并返回 TimeReport 对象
+        return new TimeReport(expenses, totalExpense);
+    }
+    public TimeReport getTypeExpense(List<Integer> types, Integer userID) {
+        // 调用 PlanClient 获取 userID 对应的 eveID 列表
+        Result result = planClient.getAllEvent(userID);
+
+        // 提取返回的 eveID 列表
+        List<Integer> eveIDs = (List<Integer>) result.getData();
+        if (eveIDs == null || eveIDs.isEmpty()) {
+            return new TimeReport(Collections.emptyList(), 0); // 无相关事件
+        }
+
+        // 创建查询条件
+        LambdaQueryWrapper<Expense> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Expense::getEveID, eveIDs); // 添加 eveID 筛选条件
+        queryWrapper.in(Expense::getType, types);  // 添加 type 筛选条件
+
+        // 查询符合条件的记录
+        List<Expense> expenses = expenseMapper.selectList(queryWrapper);
+
+        // 计算总开销金额
+        int totalExpense = expenses.stream()
+                .mapToInt(expense -> Math.round(expense.getMoney()))
+                .sum();
+
+        // 构建并返回 Report 对象
+        return new TimeReport(expenses, totalExpense);
+    }
+
+
+}

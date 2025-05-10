@@ -1,8 +1,8 @@
 package org.example.tmplan.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.example.tmplan.pojo.Event;
-import org.example.tmplan.pojo.vo.EventVo;
+import org.example.tmplan.domain.po.Event;
+import org.example.tmplan.domain.vo.EventVo;
 
 import java.util.List;
 

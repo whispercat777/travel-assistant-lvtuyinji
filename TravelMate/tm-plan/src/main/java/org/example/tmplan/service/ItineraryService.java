@@ -1,10 +1,9 @@
 package org.example.tmplan.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.example.tmplan.pojo.Event;
-import org.example.tmplan.pojo.Itinerary;
-import org.example.tmplan.pojo.dto.ItineraryDTO;
-import org.example.tmplan.pojo.vo.ItineraryVo;
+import org.example.tmplan.domain.po.Itinerary;
+import org.example.tmplan.domain.dto.ItineraryDTO;
+import org.example.tmplan.domain.vo.ItineraryVo;
 
 import java.util.List;
 
