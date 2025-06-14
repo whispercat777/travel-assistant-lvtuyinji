@@ -16,7 +16,7 @@ Page({
   fetchItineraries() {
     const userId = wx.getStorageSync('userId')
     wx.request({
-      url: `http://113.44.75.241:8080/itinerary/getall?userID=${userId}`,
+      url: `http://139.224.36.136:8080/itinerary/getall?userID=${userId}`,
       method: 'GET',
       header: {
         'Content-Type': 'application/json'
@@ -74,10 +74,19 @@ Page({
   },
 
   handleAdd() {
+    const userId = wx.getStorageSync('userId')
+    if (!userId) {
+      console.log('跳转到登录页面')
+      wx.redirectTo({
+        url: '/pages/login/login'
+      })
+      return
+    }
+    
     wx.navigateTo({
       url: '/pages/itinerary/editItinerary/editItinerary'
     })
-    console.log('add');
+    console.log('add')
   },
 
   handleDelete(e) {
@@ -88,7 +97,7 @@ Page({
       success: (res) => {
         if (res.confirm) {
           wx.request({
-            url: `http://113.44.75.241:8080/itinerary/delete?id=${id}`,
+            url: `http://139.224.36.136:8080/itinerary/delete?id=${id}`,
             method: 'DELETE',
             success: (res) => {
               if (res.data.code === 1) {

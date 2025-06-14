@@ -9,7 +9,7 @@ Page({
   },
   fetchIntelligence(itiID) {
     wx.request({
-      url: `http://113.44.75.241:8080/itinerary/getintrec?id=${itiID}`,
+      url: `http://139.224.36.136:8080/itinerary/getintrec?id=${itiID}`,
       success: (res) => {
         if (res.data.code === 1) {
           this.setData({

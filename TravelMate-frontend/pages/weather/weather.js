@@ -121,7 +121,7 @@ Page({
     this.setData({ loading: true });
     
     wx.request({
-      url: `http://113.44.75.241:8080/weather/get`,
+      url: `http://139.224.36.136:8080/weather/get`,
       method: 'GET',
       data: {
         location: location,
@@ -199,7 +199,7 @@ Page({
   fetchReminders() {
     const { userId } = this.data;
     wx.request({
-      url: `http://113.44.75.241:8080/reminder/get?userID=${userId}`,  // userID 改为 userId
+      url: `http://139.224.36.136:8080/reminder/get?userID=${userId}`,  // userID 改为 userId
       method: 'GET',
       success: (res) => {
         if (res.data.code === 1) {
@@ -220,6 +220,13 @@ Page({
 
   // 添加提醒
   handleAddReminder() {
+    if (!this.data.userId) {
+      console.log('跳转到登录页面')
+      wx.redirectTo({
+        url: '/pages/login/login'
+      })
+      return
+    }
     wx.requestSubscribeMessage({
       tmplIds: ['QiqGKiYCCTTaCynpmMLiv8FPkNfohFnHqDC4SrHYG_A'], // 替换为你在公众平台申请的模板ID
       success: (res) => {
@@ -267,7 +274,7 @@ Page({
       success: (res) => {
         if (res.confirm) {
           wx.request({
-            url: `http://113.44.75.241:8080/reminder/delete?id=${id}`,
+            url: `http://139.224.36.136:8080/reminder/delete?id=${id}`,
             method: 'DELETE',
             success: (res) => {
               if (res.data.code === 1) {

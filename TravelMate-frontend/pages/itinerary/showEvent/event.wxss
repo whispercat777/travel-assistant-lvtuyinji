@@ -1,3 +1,4 @@
+/* 页面容器 */
 .container {
   position: relative;
   width: 100vw;
@@ -5,6 +6,7 @@
   overflow: hidden;
 }
 
+/* 背景图片 */
 .bg-image {
   position: absolute;
   width: 100%;
@@ -12,6 +14,7 @@
   z-index: 1;
 }
 
+/* 内容区域 */
 .content {
   position: relative;
   z-index: 2;
@@ -20,7 +23,7 @@
   flex-direction: column;
 }
 
-/* Header Styles */
+/* 头部样式 */
 .header {
   padding: 40rpx;
   display: flex;
@@ -28,10 +31,12 @@
   align-items: flex-start;
 }
 
+/* 行程信息区域 */
 .itinerary-info {
   flex: 1;
 }
 
+/* 行程标题 */
 .title {
   font-size: 40rpx;
   font-weight: 600;
@@ -39,12 +44,14 @@
   margin-bottom: 16rpx;
 }
 
+/* 行程日期 */
 .date {
   font-size: 28rpx;
   color: #666;
   margin-bottom: 12rpx;
 }
 
+/* 行程位置 */
 .location {
   display: flex;
   align-items: center;
@@ -52,12 +59,14 @@
   color: #666;
 }
 
+/* 位置图标 */
 .location-icon {
   width: 32rpx;
   height: 32rpx;
   margin-right: 8rpx;
 }
 
+/* 智能推荐按钮 */
 .intelligence-btn {
   padding: 16rpx 32rpx;
   background: #6f7348;
@@ -66,17 +75,19 @@
   font-size: 28rpx;
 }
 
-/* Events List Styles */
+/* 事件列表容器 */
 .events-container {
   flex: 1;
   overflow: hidden;
   margin-bottom: 220rpx;
 }
 
+/* 事件列表 */
 .events-list {
   padding: 0 40rpx;
 }
 
+/* 事件卡片 */
 .event-card {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 16rpx;
@@ -85,6 +96,7 @@
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
 }
 
+/* 事件卡片头部 */
 .event-header {
   display: flex;
   justify-content: space-between;
@@ -93,26 +105,31 @@
   font-size: 28rpx;
 }
 
+/* 事件类型 */
 .event-type {
   display: flex;
   align-items: center;
 }
 
+/* 类型图标 */
 .type-icon {
   width: 36rpx;
   height: 36rpx;
   margin-right: 8rpx;
 }
 
+/* 事件时间 */
 .event-time {
   font-size: 28rpx;
   color: #666;
 }
 
+/* 事件内容区 */
 .event-content {
   margin-bottom: 20rpx;
 }
 
+/* 事件名称 */
 .event-name {
   font-size: 34rpx;
   font-weight: 600;
@@ -120,6 +137,7 @@
   margin-bottom: 12rpx;
 }
 
+/* 事件位置 */
 .event-location {
   display: flex;
   align-items: center;
@@ -128,24 +146,28 @@
   margin-bottom: 12rpx;
 }
 
+/* 信息图标 */
 .info-icon {
   width: 32rpx;
   height: 32rpx;
   margin-right: 8rpx;
 }
 
+/* 事件描述 */
 .event-description {
   font-size: 28rpx;
   color: #666;
   line-height: 1.5;
 }
 
+/* 事件操作区 */
 .event-actions {
   display: flex;
   justify-content: flex-end;
   gap: 20rpx;
 }
 
+/* 操作按钮基础样式 */
 .action-btn {
   display: flex;
   align-items: center;
@@ -154,23 +176,26 @@
   font-size: 26rpx;
 }
 
+/* 预算按钮样式 */
 .action-btn.budget {
   background: #f0f0f0;
   color: #666;
 }
 
+/* 编辑按钮样式 */
 .action-btn.edit {
   background: #84b68c;
   color: white;
 }
 
+/* 操作图标 */
 .action-icon {
   width: 32rpx;
   height: 32rpx;
   margin-right: 8rpx;
 }
 
-/* Add Button Styles */
+/* 添加按钮样式 */
 .add-btn {
   position: fixed;
   bottom: 90rpx;
@@ -187,13 +212,14 @@
   font-size: 30rpx;
 }
 
+/* 添加图标 */
 .add-icon {
   width: 36rpx;
   height: 36rpx;
   margin-right: 10rpx;
 }
 
-/* Modal Styles */
+/* 模态框样式 */
 .modal {
   position: fixed;
   top: 0;
@@ -207,6 +233,7 @@
   justify-content: center;
 }
 
+/* 模态框内容区 */
 .modal-content {
   width: 80%;
   background: white;
@@ -214,6 +241,7 @@
   overflow: hidden;
 }
 
+/* 模态框头部 */
 .modal-header {
   padding: 24rpx;
   display: flex;
@@ -222,16 +250,19 @@
   border-bottom: 1rpx solid #eee;
 }
 
+/* 关闭按钮 */
 .close-btn {
   font-size: 40rpx;
   color: #999;
   padding: 0 20rpx;
 }
 
+/* 模态框主体 */
 .modal-body {
   padding: 32rpx;
 }
 
+/* 删除按钮样式 */
 .action-btn.delete {
   background: rgba(255, 99, 99, 0.1);
   color: #999;

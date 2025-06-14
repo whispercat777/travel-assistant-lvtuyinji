@@ -66,9 +66,16 @@ Page({
       }
     }
     
+    // 计算新的查询日期范围结束时间（提醒日期后3天）
+    const reminderDate = new Date(value);
+    const newEndDate = new Date(reminderDate);
+    newEndDate.setDate(reminderDate.getDate() + 3);
+    const newEndDateStr = newEndDate.toISOString().split('T')[0];
+    
     this.setData({
       [`reminder.${field}`]: value,
-      'reminder.queryDate': value // 重置查询日期为提醒时间的日期
+      'reminder.queryDate': value, // 重置查询日期为提醒时间的日期
+      endDate: newEndDateStr // 更新查询日期的结束范围
     });
     this.checkSaveDisabled();
   },
@@ -140,7 +147,7 @@ Page({
     if (this.data.isEdit) {
       // 编辑提醒
       wx.request({
-        url: 'http://113.44.75.241:8080/reminder/modify',
+        url: 'http://139.224.36.136:8080/reminder/modify',
         method: 'PUT',
         data: {
           id,
@@ -180,7 +187,7 @@ Page({
     } else {
       // 新增提醒
       wx.request({
-        url: 'http://113.44.75.241:8080/reminder/add',
+        url: 'http://139.224.36.136:8080/reminder/add',
         method: 'POST',
         data: {
           userId,

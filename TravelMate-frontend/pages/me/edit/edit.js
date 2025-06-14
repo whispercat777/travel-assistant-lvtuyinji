@@ -48,7 +48,7 @@ Page({
 
     // 更新用户信息到数据库
     wx.request({
-      url: `http://113.44.75.241:8080/user/info`,
+      url: `http://139.224.36.136:8080/user/info`,
       method: 'PUT',
       header: {
         'Content-Type': 'application/json'
