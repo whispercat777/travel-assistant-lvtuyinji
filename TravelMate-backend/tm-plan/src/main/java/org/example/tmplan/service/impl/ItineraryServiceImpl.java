@@ -1,0 +1,154 @@
+package org.example.tmplan.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.example.tmplan.mapper.ItineraryMapper;
+import org.example.tmplan.domain.po.Itinerary;
+import org.example.tmplan.domain.dto.ItineraryDTO;
+import org.example.tmplan.domain.vo.EventVo;
+import org.example.tmplan.domain.vo.ItineraryVo;
+import org.example.tmplan.service.EventService;
+import org.example.tmplan.service.ItineraryService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 行程服务实现类。
+ * 提供行程的新增、修改、查询、删除功能，
+ * 并集成事件服务，用于聚合返回完整行程数据。
+ */
+@Slf4j
+@Service
+public class ItineraryServiceImpl extends ServiceImpl<ItineraryMapper, Itinerary> implements ItineraryService {
+
+    @Autowired
+    private ItineraryMapper itineraryMapper;
+
+    @Autowired
+    private EventService eventService;
+
+    /**
+     * 添加一个新的行程记录。
+     *
+     * @param itinerary 行程实体
+     * @return 新增行程的 ID，失败返回 null
+     */
+    public Integer addItinerary(Itinerary itinerary) {
+        boolean isSaved = this.save(itinerary);
+        return isSaved ? itinerary.getID() : null;
+    }
+
+    /**
+     * 根据用户 ID 获取其所有行程列表。
+     *
+     * @param userID 用户 ID
+     * @return 行程列表
+     */
+    public List<Itinerary> getItinerariesByUserID(Integer userID) {
+        return itineraryMapper.findByUserID(userID);
+    }
+
+    /**
+     * 根据行程 ID 获取完整行程信息（含事件列表）。
+     *
+     * @param ID 行程 ID
+     * @return 包含事件列表的行程视图对象
+     */
+    public ItineraryVo getItineraryByID(Integer ID) {
+        Itinerary itinerary = this.getById(ID);
+        ItineraryVo vo = new ItineraryVo();
+        BeanUtils.copyProperties(itinerary, vo);
+        vo.setEvents(eventService.findByItiID(ID));
+        return vo;
+    }
+
+    /**
+     * 修改行程信息，仅更新非空字段。
+     *
+     * @param itinerary 修改内容
+     * @return 修改成功返回行程 ID，失败返回 null
+     */
+    public Integer modifyItinerary(Itinerary itinerary) {
+        LambdaUpdateWrapper<Itinerary> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Itinerary::getID, itinerary.getID())
+                .set(itinerary.getUserID() != null, Itinerary::getUserID, itinerary.getUserID())
+                .set(itinerary.getName() != null, Itinerary::getName, itinerary.getName())
+                .set(itinerary.getStartDate() != null, Itinerary::getStartDate, itinerary.getStartDate())
+                .set(itinerary.getEndDate() != null, Itinerary::getEndDate, itinerary.getEndDate())
+                .set(itinerary.getLocation() != null, Itinerary::getLocation, itinerary.getLocation());
+
+        int rows = itineraryMapper.update(null, updateWrapper);
+        if (rows > 0) {
+            log.info("行程ID为{}的记录更新成功", itinerary.getID());
+            return itinerary.getID();
+        }
+        log.warn("行程ID为{}的记录更新失败", itinerary.getID());
+        return null;
+    }
+
+    /**
+     * 删除指定行程及其下属所有事件。
+     *
+     * @param id 行程 ID
+     * @return 是否成功删除
+     */
+    @Override
+    public boolean deleteItinerary(Integer id) {
+        List<EventVo> events = eventService.findByItiID(id);
+        if (events != null && !events.isEmpty()) {
+            for (EventVo event : events) {
+                boolean eventDeleted = eventService.deleteEvent(event.getID());
+                if (!eventDeleted) {
+                    log.warn("删除事件ID为{}时失败", event.getID());
+                    return false;
+                }
+            }
+        }
+
+        boolean itineraryDeleted = this.removeById(id);
+        if (itineraryDeleted) {
+            log.info("行程ID为{}及其所有关联事件删除成功", id);
+            return true;
+        }
+
+        log.warn("删除行程ID为{}时失败", id);
+        return false;
+    }
+
+    /**
+     * 获取指定行程的简要信息（供推荐服务使用）。
+     *
+     * @param id 行程 ID
+     * @return ItineraryDTO 对象
+     */
+    public ItineraryDTO getItineraryDetails(Integer id) {
+        Itinerary itinerary = itineraryMapper.selectById(id);
+        if (itinerary == null) {
+            throw new RuntimeException("Itinerary not found for ID: " + id);
+        }
+        return new ItineraryDTO(itinerary.getStartDate(), itinerary.getEndDate(), itinerary.getLocation());
+    }
+
+    /**
+     * 获取某用户所有事件 ID（跨多个行程）。
+     *
+     * @param userID 用户 ID
+     * @return 所有事件 ID 列表
+     */
+    public List<Integer> getEventByUserID(Integer userID) {
+        List<Itinerary> itineraries = itineraryMapper.findByUserID(userID);
+        List<Integer> eventIDs = new ArrayList<>();
+        for (Itinerary itinerary : itineraries) {
+            List<EventVo> events = eventService.findByItiID(itinerary.getID());
+            for (EventVo event : events) {
+                eventIDs.add(event.getID());
+            }
+        }
+        return eventIDs;
+    }
+}
