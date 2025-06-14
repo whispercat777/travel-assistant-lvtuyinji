@@ -13,10 +13,6 @@ Page({
       this.setData({
         userInfo: userInfo
       });
-    } else {
-      wx.redirectTo({
-        url: '/pages/login/login'
-      });
     }
   },
 
@@ -30,6 +26,14 @@ Page({
   },
 
   handleEdit() {
+    const userId = wx.getStorageSync('userId')
+    if (!userId) {
+      console.log('跳转到登录页面')
+      wx.redirectTo({
+        url: '/pages/login/login'
+      })
+      return
+    }
     // 跳转到编辑页面
     wx.navigateTo({
       url: '/pages/me/edit/edit'

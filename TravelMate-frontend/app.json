@@ -12,7 +12,8 @@
     "pages/itinerary/intelligence/intelligence",
     "pages/itinerary/showEvent/budget/budget",
     "pages/itinerary/showEvent/budget/editExpense/editExpense",
-    "pages/weather/editReminder/editReminder"
+    "pages/weather/editReminder/editReminder",
+    "pages/test/test"
   ],
   "window": {
     "navigationBarTextStyle": "black",

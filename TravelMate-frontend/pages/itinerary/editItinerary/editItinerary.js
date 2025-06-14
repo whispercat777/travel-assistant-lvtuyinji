@@ -26,7 +26,7 @@ Page({
 
   fetchItineraryDetail(id) {
     wx.request({
-      url: `http://113.44.75.241:8080/itinerary/getone?ID=${id}`,
+      url: `http://139.224.36.136:8080/itinerary/getone?ID=${id}`,
       method: 'GET',
       success: (res) => {
         if (res.data.code === 1) {
@@ -119,8 +119,8 @@ Page({
 
     // 根据是否为编辑模式选择不同的URL
     const url = this.data.isEditMode ? 
-      'http://113.44.75.241:8080/itinerary/modify' :  // 编辑模式URL
-      'http://113.44.75.241:8080/itinerary/add'       // 新建模式URL
+      'http://139.224.36.136:8080/itinerary/modify' :  // 编辑模式URL
+      'http://139.224.36.136:8080/itinerary/add'       // 新建模式URL
 
       if (this.data.isEditMode) {
         requestData = { id: this.data.id }

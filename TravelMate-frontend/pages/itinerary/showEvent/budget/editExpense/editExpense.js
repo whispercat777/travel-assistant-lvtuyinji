@@ -114,7 +114,7 @@ Page({
     if (this.data.expenseId) {
       // 编辑
       wx.request({
-        url: 'http://113.44.75.241:8080/expense/modify',
+        url: 'http://139.224.36.136:8080/expense/modify',
         method: 'PUT',
         data: {
           id: this.data.expenseId,
@@ -141,7 +141,7 @@ Page({
     } else {
       // 新增
       wx.request({
-        url: 'http://113.44.75.241:8080/expense/add',
+        url: 'http://139.224.36.136:8080/expense/add',
         method: 'POST',
         data: {
           eveID: this.data.eventId,

@@ -149,11 +149,12 @@ Page({
       if (endDateTime) requestData.endTime = endDateTime
    
       wx.request({
-        url: 'http://113.44.75.241:8080/event/modify',
+        url: 'http://139.224.36.136:8080/event/modify',
         method: 'PUT',
         data: requestData,
         success: (res) => {
           if (res.data.code === 1) {
+            console.log(requestData)
             const pages = getCurrentPages()
             const prevPage = pages[pages.length - 2]
             prevPage.fetchItineraryData(prevPage.data.itinerary.id)
@@ -184,7 +185,7 @@ Page({
     } else {
       // 添加事件逻辑
       wx.request({
-        url: 'http://113.44.75.241:8080/event/add',
+        url: 'http://139.224.36.136:8080/event/add',
         method: 'POST',
         data: {
           itiID: this.data.itiID,

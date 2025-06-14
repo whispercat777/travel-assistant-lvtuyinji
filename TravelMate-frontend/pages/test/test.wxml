@@ -1,0 +1,69 @@
+<!-- test.wxml -->
+<view class="container">
+  <view class="test-controls">
+    <button 
+      class="test-btn primary" 
+      bindtap="runAllTests" 
+      disabled="{{isRunning}}"
+    >
+      {{isRunning ? '测试进行中...' : '运行集成测试'}}
+    </button>
+    
+    <button 
+      class="test-btn secondary" 
+      bindtap="runNetworkTests" 
+      disabled="{{isRunning}}"
+    >
+      {{isRunning ? '测试进行中...' : '运行网络测试'}}
+    </button>
+    
+    <button 
+      class="test-btn device" 
+      bindtap="runDeviceTests" 
+      disabled="{{isRunning}}"
+    >
+      {{isRunning ? '测试进行中...' : '运行兼容性测试'}}
+    </button>
+    
+    <button class="test-btn clear" bindtap="clearResults">
+      清空结果
+    </button>
+  </view>
+  
+  <view class="progress-section" wx:if="{{isRunning}}">
+    <view class="progress-bar">
+      <progress percent="{{testProgress}}" stroke-width="8" activeColor="#007AFF" />
+    </view>
+    <text class="progress-text">测试进度: {{testProgress}}%</text>
+  </view>
+  
+  <view class="results-section" wx:if="{{testResults.length > 0}}">
+    <view class="results-header">
+      <text class="results-title">测试结果 ({{testResults.length}}项)</text>
+    </view>
+    
+    <scroll-view class="results-list" scroll-y="true">
+      <view 
+        wx:for="{{testResults}}" 
+        wx:key="index" 
+        class="result-item {{item.status.toLowerCase()}}"
+      >
+        <view class="result-header">
+          <text class="test-name">{{item.name}}</text>
+          <view class="status-badge {{item.status.toLowerCase()}}">
+            {{item.status}}
+          </view>
+        </view>
+        
+        <view class="result-content">
+          <text class="test-message">{{item.message}}</text>
+          <text class="test-time">{{item.timestamp}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  
+  <view class="empty-state" wx:if="{{testResults.length === 0 && !isRunning}}">
+    <text class="empty-text">点击上方按钮开始测试</text>
+  </view>
+</view>

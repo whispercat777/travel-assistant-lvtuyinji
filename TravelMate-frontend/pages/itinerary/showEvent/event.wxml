@@ -1,8 +1,10 @@
+<!-- 行程事件页面 -->
 <view class="container">
+  <!-- 背景图片 -->
   <image class="bg-image" src="/images/background.png" mode="aspectFill"></image>
   
   <view class="content">
-    <!-- Header section -->
+    <!-- 页面头部：行程信息与智能推荐按钮 -->
     <view class="header">
       <view class="itinerary-info">
         <view class="title">{{itinerary.name}}</view>
@@ -15,11 +17,13 @@
       <view class="intelligence-btn" bindtap="handleIntelligence">智能推荐</view>
     </view>
 
-    <!-- Events List -->
+    <!-- 事件列表滚动区域 -->
     <scroll-view scroll-y class="events-container">
       <view class="events-list">
         <block wx:for="{{itinerary.events}}" wx:key="id">
+          <!-- 单个事件卡片 -->
           <view class="event-card">
+            <!-- 事件卡片头部：类型和时间 -->
             <view class="event-header">
               <view class="event-type">
                 <image src="{{eventTypes[item.type].icon}}" mode="aspectFit" class="type-icon"></image>
@@ -30,6 +34,7 @@
               </view>
             </view>
 
+            <!-- 事件卡片内容：名称、位置和描述 -->
             <view class="event-content">
               <view class="event-name">{{item.name}}</view>
               <view class="event-location">
@@ -39,6 +44,7 @@
               <view class="event-description">{{item.description}}</view>
             </view>
 
+            <!-- 事件操作按钮组 -->
             <view class="event-actions">
               <view class="action-btn budget" bindtap="handleShowBudget" data-id="{{item.id}}">
                 <image src="/images/budget.png" mode="aspectFit" class="action-icon"></image>
@@ -58,7 +64,7 @@
       </view>
     </scroll-view>
 
-    <!-- Add Event Button -->
+    <!-- 添加事件悬浮按钮 -->
     <view class="add-btn" bindtap="handleAddEvent">
       <image src="/images/add.png" mode="aspectFit" class="add-icon"></image>
       <text>添加事件</text>

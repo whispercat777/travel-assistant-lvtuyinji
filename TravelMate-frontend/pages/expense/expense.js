@@ -3,7 +3,7 @@ const app = getApp()
 
 Page({
   data: {
-    userID: '681295884',
+    userID: '',
     viewMode: 'all',
     totalExpense: 0,
     totalBudget: 0,
@@ -27,6 +27,10 @@ Page({
   },
 
   onLoad() {
+    const userId = wx.getStorageSync('userId')
+    this.setData({
+      userID: userId
+    })
     const now = new Date()
     const startOfWeek = new Date(now.setDate(now.getDate() - 7))
     const endOfWeek = new Date()
@@ -69,7 +73,7 @@ Page({
 
   fetchAllTrips() {
     wx.request({
-      url: `http://113.44.75.241:8080/itinerary/getall`,
+      url: `http://139.224.36.136:8080/itinerary/getall`,
       method: 'GET',
       data: {
         userID: this.data.userID
@@ -86,7 +90,7 @@ Page({
 
   fetchTimeExpenses() {
     wx.request({
-      url: `http://113.44.75.241:8080/report/time`,
+      url: `http://139.224.36.136:8080/report/time`,
       method: 'GET',
       data: {
         userID: this.data.userID,
@@ -128,13 +132,14 @@ Page({
   fetchByType() {
     const types = this.data.selectedTypes.join(',')
     wx.request({
-      url: `http://113.44.75.241:8080/report/type`,
+      url: `http://139.224.36.136:8080/report/type`,
       method: 'GET',
       data: {
         userID: this.data.userID,
         types: types || '1,2,3,4,5,6,7'
       },
       success: (res) => {
+        console.log(res.data)
         if (res.data.code === 1) {
           const formattedExpenses = res.data.data.expenses.map(expense => ({
             ...expense,
@@ -151,7 +156,7 @@ Page({
 
   fetchBudgetAndExpense() {
     wx.request({
-      url: `http://113.44.75.241:8080/report/budgetandexpense`,
+      url: `http://139.224.36.136:8080/report/budgetandexpense`,
       method: 'GET',
       data: {
         userID: this.data.userID
@@ -179,7 +184,7 @@ Page({
       return
     }
     wx.request({
-      url: `http://113.44.75.241:8080/report/iti`,
+      url: `http://139.224.36.136:8080/report/iti`,
       method: 'GET',
       data: {
         itiIDs: this.data.tripId

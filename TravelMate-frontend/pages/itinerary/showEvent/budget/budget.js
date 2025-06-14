@@ -28,7 +28,7 @@ Page({
   fetchData() {
     // Fetch budget data
     wx.request({
-      url: `http://113.44.75.241:8080/budget/event?eveID=${this.data.eventId}`,
+      url: `http://139.224.36.136:8080/budget/event?eveID=${this.data.eventId}`,
       success: (res) => {
         if (res.data.code === 1 && res.data.data.length > 0) {
           this.setData({ budget: res.data.data[0] }, () => {
@@ -42,7 +42,7 @@ Page({
 
     // Fetch expenses data
     wx.request({
-      url: `http://113.44.75.241:8080/expense/event?eveID=${this.data.eventId}`,
+      url: `http://139.224.36.136:8080/expense/event?eveID=${this.data.eventId}`,
       success: (res) => {
         if (res.data.code === 1) {
           const expenses = res.data.data.map(expense => ({
@@ -90,7 +90,7 @@ Page({
           }
   
           wx.request({
-            url: 'http://113.44.75.241:8080/budget/modify',
+            url: 'http://139.224.36.136:8080/budget/modify',
             method: 'PUT',
             data: {
               id: this.data.budget.id,
@@ -125,7 +125,7 @@ Page({
           }
 
           wx.request({
-            url: 'http://113.44.75.241:8080/budget/add',
+            url: 'http://139.224.36.136:8080/budget/add',
             method: 'POST',
             data: {
               eveID: this.data.eventId,
@@ -170,7 +170,7 @@ Page({
       success: (res) => {
         if (res.confirm) {
           wx.request({
-            url: `http://113.44.75.241:8080/expense/delete?id=${id}`,
+            url: `http://139.224.36.136:8080/expense/delete?id=${id}`,
             method: 'DELETE',
             success: (res) => {
               if (res.data.code === 1) {

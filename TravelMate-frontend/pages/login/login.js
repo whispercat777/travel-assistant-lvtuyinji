@@ -40,7 +40,7 @@ Page({
       
             // 3. 请求后端获取id
             wx.request({
-              url: `http://113.44.75.241:8080/user/login?code=${loginResult.code}`,
+              url: `http://139.224.36.136:8080/user/login?code=${loginResult.code}`,
               method: 'GET',
               header: {
                 'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ Page({
                   
                   // 4. 获取到id后，请求数据库中的用户信息
                   wx.request({
-                    url: `http://113.44.75.241:8080/user/info?userID=${userId}`,
+                    url: `http://139.224.36.136:8080/user/info?userID=${userId}`,
                     method: 'GET',
                     success: (infoRes) => {
                       if (infoRes.data.data.name !== null) {
@@ -141,7 +141,7 @@ Page({
 
     // 更新用户完整信息
     wx.request({
-      url: `http://113.44.75.241:8080/user/info`,
+      url: `http://139.224.36.136:8080/user/info`,
       method: 'PUT',
       header: {
         'Content-Type': 'application/json'
